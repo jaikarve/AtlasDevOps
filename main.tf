@@ -11,7 +11,7 @@ provider "mongodbatlas" {
 #
 # Create a Shared Tier Cluster
 #
-resource "mongodbatlas_cluster" "pov-terraform" {
+resource "mongodbatlas_cluster" "demo-terraform-ado" {
   project_id              = var.atlasprojectid
   name                    = "pov-terraform" 
   num_shards                   = 1
