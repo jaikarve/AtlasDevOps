@@ -1,5 +1,7 @@
 # A simple example to show how to deploy Atlas Cluster using Azure DevOps and Terraform provider
 
+### Fork this repo
+
 ## Setup Azure DevOps Organization and project
 
 ### Navigate to Project, Choose Pipelines
@@ -7,8 +9,6 @@
 ### Choose Create Pipeline
 
 ### Where is your code - Choose Github
-
-### Fork this repo
 
 ### Choose repo you forked in previous step, It will load the azure-pipelines.yml file
 
