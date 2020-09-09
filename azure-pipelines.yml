@@ -1,0 +1,64 @@
+# Sample Template to use terraform to deploy Atlas Cluster:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- task: DownloadSecureFile@1
+  displayName: tfvars
+  inputs:
+    secureFile: terraform.tfvars
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(System.DefaultWorkingDirectory)'
+  inputs:
+    SourceFolder: '$(Agent.TempDirectory)'
+    Contents: terraform.tfvars
+    TargetFolder: '$(System.DefaultWorkingDirectory)'
+- task: replacetokens@3
+  inputs:
+    targetFiles: '**/*.tf'
+    encoding: 'auto'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: false
+    tokenPrefix: '__'
+    tokenSuffix: '__'
+    useLegacyPattern: false
+    enableTelemetry: true
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+  inputs:
+    terraformVersion: '0.12.3'
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendServiceArm: 'Visual Studio Enterprise (62666e97-806f-4c02-98e6-b7c3078adaf9)'
+    backendAzureRmResourceGroupName: '$(ResourceGroupName)'
+    backendAzureRmStorageAccountName: '$(StorageAccountName)'
+    backendAzureRmContainerName: '$(ContainerName)'
+    backendAzureRmKey: 'terraform.tfstate'
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    environmentServiceNameAzureRM: 'Visual Studio Enterprise (62666e97-806f-4c02-98e6-b7c3078adaf9)'
+- task: TerraformTaskV1@0
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'Visual Studio Enterprise (62666e97-806f-4c02-98e6-b7c3078adaf9)'
+- task: DeleteFiles@1
+  displayName: 'Delete files from $(System.DefaultWorkingDirectory)'
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)'
+    Contents: terraform.tfvars
