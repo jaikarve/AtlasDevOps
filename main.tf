@@ -30,5 +30,5 @@ resource "mongodbatlas_cluster" "demo-terraform-ado" {
 
 # Use terraform output to display connection strings.
 output "connection_strings" {
-value = ["${mongodbatlas_cluster.pov-terraform.connection_strings}"]
+value = ["${mongodbatlas_cluster.demo-terraform-ado.connection_strings}"]
 }
