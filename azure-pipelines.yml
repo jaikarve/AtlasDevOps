@@ -12,13 +12,13 @@ steps:
 - task: DownloadSecureFile@1
   displayName: tfvars
   inputs:
-    secureFile: terraform.tfvars
+    secureFile: 'terraform.tfvars'
 
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(System.DefaultWorkingDirectory)'
   inputs:
     SourceFolder: '$(Agent.TempDirectory)'
-    Contents: terraform.tfvars
+    Contents: 'terraform.tfvars'
     TargetFolder: '$(System.DefaultWorkingDirectory)'
 - task: replacetokens@3
   inputs:
