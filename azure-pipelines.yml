@@ -61,4 +61,4 @@ steps:
   displayName: 'Delete files from $(System.DefaultWorkingDirectory)'
   inputs:
     SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: terraform.tfvars
+    Contents: 'terraform.tfvars'
