@@ -39,7 +39,7 @@ steps:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-    backendServiceArm: 'Visual Studio Enterprise (62666e97-806f-4c02-98e6-b7c3078adaf9)'
+    backendServiceArm: 'DevOpsDemo'
     backendAzureRmResourceGroupName: '$(ResourceGroupName)'
     backendAzureRmStorageAccountName: '$(StorageAccountName)'
     backendAzureRmContainerName: '$(ContainerName)'
@@ -49,14 +49,14 @@ steps:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-    environmentServiceNameAzureRM: 'Visual Studio Enterprise (62666e97-806f-4c02-98e6-b7c3078adaf9)'
+    environmentServiceNameAzureRM: 'DevOpsDemo'
 - task: TerraformTaskV1@0
   inputs:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     commandOptions: '-auto-approve'
-    environmentServiceNameAzureRM: 'Visual Studio Enterprise (62666e97-806f-4c02-98e6-b7c3078adaf9)'
+    environmentServiceNameAzureRM: 'DevOpsDemo'
 - task: DeleteFiles@1
   displayName: 'Delete files from $(System.DefaultWorkingDirectory)'
   inputs:
